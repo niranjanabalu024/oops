@@ -1,0 +1,26 @@
+import java.util.*;
+
+public class Library {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Map<Integer,String> books = new HashMap<>();
+        int id=1, ch;
+        do {
+            System.out.println("\n1.Add  2.Delete  3.List  4.Exit");
+            ch = sc.nextInt(); sc.nextLine();
+            if(ch==1){ 
+                System.out.print("Title: "); 
+                books.put(id, sc.nextLine()); 
+                System.out.println("Added ID "+id); 
+                id++; 
+            }
+            else if(ch==2){ 
+                System.out.print("ID: "); 
+                books.remove(sc.nextInt()); 
+                System.out.println("Deleted!"); 
+            }
+            else if(ch==3) 
+                System.out.println(books.isEmpty()? "No books": books);
+        } while(ch!=4);
+    }
+}
