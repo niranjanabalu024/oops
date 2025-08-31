@@ -1,0 +1,42 @@
+import java.io.File;
+
+public class DirectoryTree {
+    public static void main(String[] args) {
+        // Default to current directory if no path given
+        String path = args.length > 0 ? args[0] : ".";
+        File root = new File(path);
+
+        if (!root.exists()) {
+            System.out.println("Path does not exist: " + path);
+            return;
+        }
+
+        printTree(root, "", true);
+    }
+
+    private static void printTree(File file, String prefix, boolean isLast) {
+        // Print tree branch
+        System.out.print(prefix + (isLast ? "└── " : "├── "));
+        System.out.print(file.getName());
+        if (file.isFile()) {
+            System.out.print(" [" + file.length() + "B]");
+        }
+        System.out.println();
+        if (file.isDirectory()) {
+            File[] files = null;
+            try {
+                files = file.listFiles();
+            } catch (SecurityException e) {
+                System.out.println(prefix + "    " + "<permission denied>");
+                return;
+            }
+
+            if (files == null) return; // Could not read directory
+
+            for (int i = 0; i < files.length; i++) {
+                boolean last = (i == files.length - 1);
+                printTree(files[i], prefix + (isLast ? "    " : "│   "), last);
+            }
+        }
+    }
+}
